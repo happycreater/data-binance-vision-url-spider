@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: "0 3 * * *" # Everyday at 03:00 UTC
 
+permissions:
+  contents: write
+
 jobs:
   gen:
     runs-on: ubuntu-22.04
