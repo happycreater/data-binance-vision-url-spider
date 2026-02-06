@@ -9,9 +9,9 @@ class ZipDataFetcher:
     def __init__(self, url_file: str, max_concurrency: int = 500):
         self.url_file = url_file
         self.base_url = "https://data.binance.vision/"
-        self.session = aiohttp.ClientSession(base_url=self.base_url)
+        self.session = aiohttp.ClientSession()
         self.retry_limit = 3
-        self.failed_file = "failed.txt"
+        self.failed_file = f"{url_file}.failed"
         self.sem = asyncio.Semaphore(max_concurrency)
 
     async def process_one_url(self, url: str):
@@ -30,8 +30,7 @@ class ZipDataFetcher:
     async def fetch_content(self, url: str):
         for attempt in range(self.retry_limit):
             try:
-                g_url = url.replace(self.base_url, "")
-                async with self.session.get(g_url) as response:
+                async with self.session.get(url) as response:
                     response.raise_for_status()
                     return await response.read()
             except Exception as e:
@@ -75,7 +74,7 @@ async def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url-file")
+    parser.add_argument("--url-file", default='test_url.txt')
     args = parser.parse_args()
     print(f"Fetching URLs from file: {args.url_file}")
     asyncio.run(main(args))
