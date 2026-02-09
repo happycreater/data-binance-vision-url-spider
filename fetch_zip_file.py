@@ -25,7 +25,8 @@ class ZipDataFetcher:
 
     def has_downloaded(self, url: str):
         file_path = self.get_out_path(url)
-        return os.path.exists(file_path)
+        done_file = f"{file_path}.done"
+        return os.path.exists(file_path) or os.path.exists(done_file)
 
     async def fetch_content(self, url: str):
         for attempt in range(self.retry_limit):
@@ -74,7 +75,7 @@ async def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url-file", default='test_url.txt')
+    parser.add_argument("--url-file", default="test_url.txt")
     args = parser.parse_args()
     print(f"Fetching URLs from file: {args.url_file}")
     asyncio.run(main(args))
