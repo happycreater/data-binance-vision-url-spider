@@ -9,9 +9,6 @@ on:
 
 permissions:
   contents: write
-  push:
-    branches:
-      - main
 jobs:
   gen:
     runs-on: ubuntu-22.04
