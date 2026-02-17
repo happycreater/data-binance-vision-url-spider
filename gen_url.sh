@@ -12,7 +12,8 @@ set -euo pipefail
 # python gen_url.py --pattern "data/futures/um/daily/indexPriceKlines/SYMBOL/1m/" --symbol-glob "*USDT"
 # python gen_url.py --pattern "data/futures/um/daily/markPriceKlines/SYMBOL/1m/" --symbol-glob "*USDT"
 # python gen_url.py --pattern "data/futures/um/daily/premiumIndexKlines/SYMBOL/1m/" --symbol-glob "*USDT"
-python gen_url.py --pattern "data/futures/um/monthly/aggTrades/SYMBOL/" --symbol-glob "*USDT"
+# python gen_url.py --pattern "data/futures/um/monthly/aggTrades/SYMBOL/" --symbol-glob "*USDT"
+python gen_url.py --pattern "data/futures/um/monthly/klines/SYMBOL/1m/" --symbol-glob "*USDT"
 # zip files
 DATE=$(date +%Y%m%d)
 mkdir -p urls

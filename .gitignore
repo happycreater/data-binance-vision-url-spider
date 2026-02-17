@@ -6,3 +6,4 @@ __pycache__/
 backup
 # main data directory
 data.binance.vision
+.DS_store
