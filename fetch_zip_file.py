@@ -6,7 +6,7 @@ import aiofiles
 
 
 class ZipDataFetcher:
-    def __init__(self, url_file: str, max_concurrency: int = 500):
+    def __init__(self, url_file: str, max_concurrency: int = 10):
         self.url_file = url_file
         self.base_url = "https://data.binance.vision/"
         self.session = aiohttp.ClientSession()
@@ -68,7 +68,7 @@ class ZipDataFetcher:
 
 
 async def main(args):
-    fetcher = ZipDataFetcher(args.url_file)
+    fetcher = ZipDataFetcher(args.url_file, max_concurrency=args.max_concurrency)
     await fetcher.run()
     return 0
 
@@ -76,6 +76,9 @@ async def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--url-file", default="test_url.txt")
+    parser.add_argument("--max-concurrency", type=int, default=10)
     args = parser.parse_args()
-    print(f"Fetching URLs from file: {args.url_file}")
+    print(
+        f"Fetching URLs from file: {args.url_file}, max concurrency: {args.max_concurrency}"
+    )
     asyncio.run(main(args))
