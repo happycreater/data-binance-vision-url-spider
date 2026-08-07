@@ -5,6 +5,13 @@ import aiohttp
 import aiofiles
 
 
+def positive_int(value: str) -> int:
+    parsed_value = int(value)
+    if parsed_value <= 0:
+        raise argparse.ArgumentTypeError("value must be greater than 0")
+    return parsed_value
+
+
 class ZipDataFetcher:
     def __init__(self, url_file: str, max_concurrency: int = 10):
         self.url_file = url_file
@@ -76,7 +83,7 @@ async def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--url-file", default="test_url.txt")
-    parser.add_argument("--max-concurrency", type=int, default=10)
+    parser.add_argument("--max-concurrency", type=positive_int, default=10)
     args = parser.parse_args()
     print(
         f"Fetching URLs from file: {args.url_file}, max concurrency: {args.max_concurrency}"
